@@ -34,8 +34,8 @@ class HomeFragment : Fragment() {
         //모임목록 리사이클러뷰
         val list = Vector<Group>()
 
-        val item1 = Group("부산여행 가는 모임", "별하, 효림, 경화")
-        val item2 = Group("1월20일 회식정산", "별하, 효림, 경화, 아림")
+        val item1 = Group("부산여행 가는 모임", "별하, 효림, 경화", "123456123456")
+        val item2 = Group("1월20일 회식정산", "별하, 효림, 경화, 아림", "345678345678")
 
         list.add(item1)
         list.add(item2)

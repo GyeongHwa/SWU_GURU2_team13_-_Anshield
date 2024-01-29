@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.children
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.a13app.databinding.FragmentDetailsBinding
 import java.util.Vector
@@ -12,9 +14,21 @@ import java.util.Vector
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentDetailsBinding
     lateinit var adapter: ExpenseCardAdapter
+    //버튼 클릭 이벤트 처리
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setOnClickListener()
+    }
+    //onClick메서드 구현을 위한 setOnClickListener연결
+    private fun setOnClickListener() {
+        val btnSequence = binding.layoutDatails.children
+        btnSequence.forEach { btn ->
+            btn.setOnClickListener(this)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,5 +53,20 @@ class DetailsFragment : Fragment() {
         binding!!.expenseRecyclerView.adapter = adapter
 
         return binding!!.root
+    }
+    // 버튼이벤트 처리
+    override fun onClick(v: View) {
+        when (v.id){
+            R.id.btnAddExpense -> {
+                //DatailsFragment에서 ExpenseFragment로 이동 및 ID,NAME전달
+                val parentActivity = activity as ParentActivity
+                parentActivity.setFragment(ExpenseFragment())
+            }
+            //DatailsFragment에서 CalculateFragment로 이동 및 ID,NAME전달
+            R.id.btnCalculate ->{
+                val parentActivity = activity as ParentActivity
+                parentActivity.setFragment(CalculateFragment())
+            }
+        }
     }
 }
