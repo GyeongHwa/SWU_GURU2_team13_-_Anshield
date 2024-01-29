@@ -38,11 +38,22 @@ class LoginActivity : AppCompatActivity() {
             var cursor: Cursor
             cursor = sqlitedb.rawQuery("SELECT * FROM tb_account WHERE id='"+str_id+"' AND pw='"+str_pw+"'", null)
             if (cursor.count == 1) {
+                cursor.moveToFirst()
+                var id = cursor.getString(cursor.getColumnIndexOrThrow("id")).toString()
+                var name = cursor.getString(cursor.getColumnIndexOrThrow("name")).toString()
+
+                //로그인 정보 보내기
                 var intent = Intent(this, ParentActivity::class.java)
+                intent.putExtra("ID", id)
+                intent.putExtra("NAME", name)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "아이디와 비밀번호를 다시 확인해주세요", Toast.LENGTH_SHORT).show()
             }
+
+            cursor.close()
+            sqlitedb.close()
         }
+        dbManager.close()
     }
 }
