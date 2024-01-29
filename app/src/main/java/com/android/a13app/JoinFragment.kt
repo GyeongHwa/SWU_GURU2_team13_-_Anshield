@@ -5,12 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.android.a13app.databinding.FragmentHomeBinding
+import com.android.a13app.databinding.FragmentJoinBinding
 
 class JoinFragment : Fragment() {
+    lateinit var binding: FragmentJoinBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_join, container, false)
+        binding = FragmentJoinBinding.inflate(inflater, container, false)
+        return binding.root
     }
 }
