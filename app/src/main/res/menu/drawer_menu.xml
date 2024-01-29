@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/tabHome"
+        android:title="홈" />
+    <item
+        android:id="@+id/tabCreate"
+        android:title="모임생성" />
+    <item
+        android:id="@+id/tabJoin"
+        android:title="모임참가" />
+</menu>
