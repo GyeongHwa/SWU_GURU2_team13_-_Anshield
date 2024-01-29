@@ -1,12 +1,11 @@
 package com.android.a13app
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.a13app.databinding.FragmentHomeBinding
@@ -16,6 +15,9 @@ class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     lateinit var adapter: GroupAdapter
 
+    lateinit var login_id: String
+    lateinit var login_name: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,8 +25,8 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         //로그인 정보 가져오기
-        val login_id = arguments?.getString("ID")
-        val login_name = arguments?.getString("NAME")
+        login_id = arguments?.getString("ID").toString()
+        login_name = arguments?.getString("NAME").toString()
         //Toast.makeText(this.context, login_id+", "+login_name, Toast.LENGTH_SHORT).show()
 
         binding.tvName.text = login_name + "님의 모임"
@@ -43,6 +45,14 @@ class HomeFragment : Fragment() {
 
         adapter = GroupAdapter(requireContext(), list)
         binding!!.recyclerView.adapter = adapter
+
+        //로그아웃
+        binding.btnLogout.setOnClickListener {
+            var intent = Intent(requireContext(), LogoutActivity::class.java)
+            intent.putExtra("ID", login_id)
+            intent.putExtra("NAME", login_name)
+            startActivity(intent)
+        }
 
         return binding!!.root
     }
