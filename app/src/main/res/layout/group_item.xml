@@ -8,6 +8,7 @@
         android:layout_margin="10dp"
         android:gravity="center_horizontal"
         android:background="#f0f0f0"
+        android:padding="20dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/tvGroupName"
