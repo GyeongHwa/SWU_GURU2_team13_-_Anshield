@@ -48,15 +48,17 @@ class RegisterActivity : AppCompatActivity() {
                 if (cursor.count > 0) {
                     Toast.makeText(this, "이미 존재하는 아이디입니다", Toast.LENGTH_SHORT).show()
                 } else if (cursor.count == 0) { //중복되는 아이디가 없으면 회원정보 DB에 INSERT
-                    sqlitedb.execSQL("INSERT INTO tb_account VALUES ('"+str_id+"', '"+str_pw+"', '"+str_name+"')")
+                    sqlitedb.execSQL("INSERT INTO tb_account VALUES ('$str_id', '$str_pw', '$str_name')")
                     sqlitedb.close()
 
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
 
                     //로그인 페이지로 이동
                     var intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)}
+                    startActivity(intent)
+                }
             }
+            dbManager.close()
         }
     }
 }
