@@ -27,27 +27,36 @@ class ParentActivity : AppCompatActivity() {
 
         title = "우정!"
 
-        homeFragment = HomeFragment()
-        supportFragmentManager.beginTransaction().add(R.id.rootLayout, homeFragment).commit()
-        createFragment = CreateFragment()
-        joinFragment = JoinFragment()
-
         //로그인 정보 받아오기
         var intent = intent
         var login_id = intent.getStringExtra("ID")
         var login_name = intent.getStringExtra("NAME")
         //Toast.makeText(this, login_name  + ", " + login_id, Toast.LENGTH_SHORT).show()
 
+        var bundle = Bundle()
+        bundle.putString("ID", login_id)
+        bundle.putString("NAME", login_name)
+
+        homeFragment = HomeFragment()
+        createFragment = CreateFragment()
+        joinFragment = JoinFragment()
+
+        homeFragment.arguments = bundle
+        supportFragmentManager.beginTransaction().add(R.id.rootLayout, homeFragment).commit()
+
         //네비게이션 드로어 선택하면 해당 Fragment로 전환
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.tabHome -> {
+                    homeFragment.arguments = bundle
                     supportFragmentManager.beginTransaction().replace(R.id.rootLayout, homeFragment).commit()
                 }
                 R.id.tabCreate -> {
+                    createFragment.arguments = bundle
                     supportFragmentManager.beginTransaction().replace(R.id.rootLayout, createFragment).commit()
                 }
                 R.id.tabJoin -> {
+                    joinFragment.arguments = bundle
                     supportFragmentManager.beginTransaction().replace(R.id.rootLayout, joinFragment).commit()
                 }
             }
