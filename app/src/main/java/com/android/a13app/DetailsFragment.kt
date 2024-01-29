@@ -17,13 +17,12 @@ private const val ARG_PARAM2 = "param2"
 class DetailsFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentDetailsBinding
     lateinit var adapter: ExpenseCardAdapter
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    //버튼 클릭 이벤트 처리
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setOnClickListener()
     }
+    //onClick메서드 구현을 위한 setOnClickListener연결
     private fun setOnClickListener() {
         val btnSequence = binding.layoutDatails.children
         btnSequence.forEach { btn ->
@@ -55,16 +54,18 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
         return binding!!.root
     }
-
+    // 버튼이벤트 처리
     override fun onClick(v: View) {
         when (v.id){
             R.id.btnAddExpense -> {
-                val parentActivity = activity as ParentActivity
-                parentActivity.setFragment(CalculateFragment())
-            }
-            R.id.btnCalculate ->{
+                //DatailsFragment에서 ExpenseFragment로 이동 및 ID,NAME전달
                 val parentActivity = activity as ParentActivity
                 parentActivity.setFragment(ExpenseFragment())
+            }
+            //DatailsFragment에서 CalculateFragment로 이동 및 ID,NAME전달
+            R.id.btnCalculate ->{
+                val parentActivity = activity as ParentActivity
+                parentActivity.setFragment(CalculateFragment())
             }
         }
     }
