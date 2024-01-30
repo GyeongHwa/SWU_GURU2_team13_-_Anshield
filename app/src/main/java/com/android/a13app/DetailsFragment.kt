@@ -1,6 +1,8 @@
 package com.android.a13app
 
 import android.app.ActionBar
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +16,9 @@ import com.android.a13app.databinding.FragmentDetailsBinding
 import java.util.Vector
 
 class DetailsFragment : Fragment(), View.OnClickListener {
+    lateinit var dbManager: DBManager
+    lateinit var sqlitedb: SQLiteDatabase
+
     lateinit var binding: FragmentDetailsBinding
     lateinit var adapter: ExpenseCardAdapter
     lateinit var memberAdapter: MemberAdapter
@@ -39,10 +44,19 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
+
+        //모임정보 가져오기
+        val groupName: String = arguments?.getString("G_NAME").toString()
+        val token: String = arguments?.getString("TOKEN").toString()
+
         //title변경
         val actionBar = (activity as ParentActivity?)!!.supportActionBar
         actionBar!!.title = "모임이름"
         actionBar.setDisplayHomeAsUpEnabled(true)
+
+        //DB연동
+        dbManager = DBManager(requireContext(), DBManager.DB_NAME,null, 1)
+        sqlitedb = dbManager.readableDatabase
 
         //지출항목목록 리사이클러뷰
         val list = Vector<ExpenseCard>()
@@ -63,20 +77,22 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
         //멤버 리사이클러뷰
         val memberList = Vector<Member>()
+        val member: String = ""
 
-        val m_item1 = Member("별하")
-        val m_item2 = Member("효림")
-        val m_item3 = Member("효림")
-        val m_item4 = Member("효림")
-        val m_item5 = Member("효림")
-        val m_item6 = Member("효림")
+        var memberQuery = ""
+        memberQuery += "SELECT tb_account.name FROM tb_account "
+        memberQuery += "JOIN tb_member ON tb_account.id = tb_member.id "
+        memberQuery += "WHERE tb_member.token = '$token'"
+        var memberCursor: Cursor
+        memberCursor = sqlitedb.rawQuery(memberQuery, null)
 
-        memberList.add(m_item1)
-        memberList.add(m_item2)
-        memberList.add(m_item3)
-        memberList.add(m_item4)
-        memberList.add(m_item5)
-        memberList.add(m_item6)
+        while (memberCursor.moveToNext()) {
+            val memberItem = Member(
+                memberCursor.getString(memberCursor.getColumnIndexOrThrow("tb_account.name"))
+                    .toString()
+            )
+            memberList.add(memberItem)
+        }
 
         val memberLayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         binding!!.membersRecyclerView.layoutManager = memberLayoutManager
