@@ -9,7 +9,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/joinTextview"
+        android:id="@+id/joininTextview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
@@ -35,14 +35,14 @@
         android:id="@+id/joinButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="460dp"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginTop="400dp"
         android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="bottom"
         android:text="모임 참가"
         android:textAlignment="center"
-        android:textSize="24sp"
+        android:textSize="20sp"
         tools:ignore="RtlCompat" />
 
 </LinearLayout>
