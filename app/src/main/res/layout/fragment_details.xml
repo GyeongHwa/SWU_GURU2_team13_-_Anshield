@@ -38,8 +38,9 @@
             android:layout_height="438dp"
             android:layout_marginBottom="20dp"/>
 
+
         <TextView
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,6 +49,15 @@
             android:textSize="20sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteY="685dp" />
+        <Button
+            android:layout_weight="1"
+            android:id="@+id/btnCalculate"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="정산하기"/>
     </LinearLayout>
 
 

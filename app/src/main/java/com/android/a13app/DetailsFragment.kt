@@ -1,5 +1,6 @@
 package com.android.a13app
 
+import android.app.ActionBar
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -17,16 +18,20 @@ private const val ARG_PARAM2 = "param2"
 class DetailsFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentDetailsBinding
     lateinit var adapter: ExpenseCardAdapter
+    lateinit var parentActivity: ParentActivity
     //버튼 클릭 이벤트 처리
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnClickListener()
-    }
-    //onClick메서드 구현을 위한 setOnClickListener연결
-    private fun setOnClickListener() {
-        val btnSequence = binding.layoutDatails.children
-        btnSequence.forEach { btn ->
-            btn.setOnClickListener(this)
+
+        //btnAddExpense클릭시 DatailsFragment에서 ExpenseFragment로 이동 및 ID,NAME전달
+        binding.btnAddExpense.setOnClickListener {
+            val parentActivity = activity as ParentActivity
+            parentActivity.setFragment(ExpenseFragment())
+        }
+        //btnCalculate클릭시 DatailsFragment에서 CalculateFragment로 이동 및 ID,NAME전달
+        binding.btnCalculate.setOnClickListener {
+            val parentActivity = activity as ParentActivity
+            parentActivity.setFragment(CalculateFragment())
         }
     }
 
@@ -35,6 +40,11 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
+        //title변경
+        val actionBar = (activity as ParentActivity?)!!.supportActionBar
+        actionBar!!.title = "모임이름"
+        actionBar.setDisplayHomeAsUpEnabled(false)
+
         //지출항목목록 리사이클러뷰
         val list = Vector<ExpenseCard>()
 
@@ -54,19 +64,8 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
         return binding!!.root
     }
-    // 버튼이벤트 처리
-    override fun onClick(v: View) {
-        when (v.id){
-            R.id.btnAddExpense -> {
-                //DatailsFragment에서 ExpenseFragment로 이동 및 ID,NAME전달
-                val parentActivity = activity as ParentActivity
-                parentActivity.setFragment(ExpenseFragment())
-            }
-            //DatailsFragment에서 CalculateFragment로 이동 및 ID,NAME전달
-            R.id.btnCalculate ->{
-                val parentActivity = activity as ParentActivity
-                parentActivity.setFragment(CalculateFragment())
-            }
-        }
+
+    override fun onClick(p0: View?) {
+        TODO("Not yet implemented")
     }
 }
