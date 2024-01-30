@@ -50,6 +50,7 @@ class CreateFragment : Fragment() {
 
                 //모임 생성
                 sqlitedb.execSQL("INSERT INTO tb_group VALUES ('$token', '$str_groupName')")
+                sqlitedb.execSQL("INSERT INTO tb_member(id, token) VALUES('$login_id', '$token')")
                 sqlitedb.close()
 
                 Toast.makeText(requireContext(), "모임이 생성되었습니다", Toast.LENGTH_SHORT).show()
