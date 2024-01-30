@@ -33,6 +33,7 @@ class GroupAdapter(private val context: Context, private val items: Vector<Group
             detailsFragment = DetailsFragment()
             var bundle = Bundle()
             bundle.putString("TOKEN", item.token)
+            bundle.putString("G_NAME", item.groupName)
 
             detailsFragment.arguments = bundle
             (context as AppCompatActivity).supportFragmentManager.beginTransaction().replace(R.id.rootLayout, detailsFragment).commit()
