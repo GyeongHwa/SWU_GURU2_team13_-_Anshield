@@ -70,7 +70,7 @@ class JoinFragment : Fragment() {
             // tb_team 테이블에서 입력받은 토큰과 일치하는 모임이 있는지 확인
             if (isTokenValid(enteredToken)) {
                 // tb_member 테이블에 로그인 중인 사용자의 ID와 입력받은 토큰 추가
-                addMemberToTeam(id.toString(), enteredToken)
+                addMemberToTeam(login_id.toString(), enteredToken)
 
                 // 모임의 멤버가 되었습니다! 메시지 출력
                 Toast.makeText(context, "모임의 멤버가 되었습니다!", Toast.LENGTH_SHORT).show()
