@@ -42,7 +42,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         //title변경
         val actionBar = (activity as ParentActivity?)!!.supportActionBar
         actionBar!!.title = "모임이름"
-        actionBar.setDisplayHomeAsUpEnabled(false)
+        actionBar.setDisplayHomeAsUpEnabled(true)
 
         //지출항목목록 리사이클러뷰
         val list = Vector<ExpenseCard>()
