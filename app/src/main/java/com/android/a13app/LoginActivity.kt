@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         btnLoginForm = findViewById(R.id.btnLoginForm)
 
         //DB 생성(friendshipDB)
-        dbManager = DBManager(this, "friendshipDB",null, 1)
+        dbManager = DBManager(this, DBManager.DB_NAME,null, 1)
 
         btnLoginForm.setOnClickListener {
             //사용자 입력값 가져오기
