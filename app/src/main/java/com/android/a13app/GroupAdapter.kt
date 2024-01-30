@@ -13,9 +13,6 @@ import com.android.a13app.databinding.GroupItemBinding
 import java.util.Vector
 
 class GroupAdapter(private val context: Context, private val items: Vector<Group>) : RecyclerView.Adapter<GroupAdapter.ViewHolder>() {
-    lateinit var dbManager: DBManager
-    lateinit var sqlitedb: SQLiteDatabase
-
     lateinit var detailsFragment: DetailsFragment
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)

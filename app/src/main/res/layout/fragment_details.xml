@@ -13,23 +13,35 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="8dp"
         android:orientation="vertical">
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="참가토큰: "/>
+            android:orientation="horizontal">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/membersRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:scrollbars="horizontal"/>
 
-    <Button
-        android:id="@+id/btnAddExpense"
-        android:layout_width="74dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="+"
-        android:textAllCaps="false"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteY="65dp" />
+            <Button
+                android:id="@+id/btnAddExpense"
+                android:layout_width="74dp"
+                android:layout_height="wrap_content"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="+"
+                android:textAllCaps="false"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteY="65dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvToken"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="참가토큰: "/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/expenseRecyclerView"

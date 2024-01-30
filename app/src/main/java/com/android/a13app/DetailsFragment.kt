@@ -9,15 +9,14 @@ import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.a13app.databinding.FragmentDetailsBinding
 import java.util.Vector
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class DetailsFragment : Fragment(), View.OnClickListener {
     lateinit var binding: FragmentDetailsBinding
     lateinit var adapter: ExpenseCardAdapter
+    lateinit var memberAdapter: MemberAdapter
     lateinit var parentActivity: ParentActivity
     //버튼 클릭 이벤트 처리
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -61,6 +60,29 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
         adapter = ExpenseCardAdapter(requireContext(), list)
         binding!!.expenseRecyclerView.adapter = adapter
+
+        //멤버 리사이클러뷰
+        val memberList = Vector<Member>()
+
+        val m_item1 = Member("별하")
+        val m_item2 = Member("효림")
+        val m_item3 = Member("효림")
+        val m_item4 = Member("효림")
+        val m_item5 = Member("효림")
+        val m_item6 = Member("효림")
+
+        memberList.add(m_item1)
+        memberList.add(m_item2)
+        memberList.add(m_item3)
+        memberList.add(m_item4)
+        memberList.add(m_item5)
+        memberList.add(m_item6)
+
+        val memberLayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+        binding!!.membersRecyclerView.layoutManager = memberLayoutManager
+
+        memberAdapter = MemberAdapter(requireContext(), memberList)
+        binding!!.membersRecyclerView.adapter = memberAdapter
 
         return binding!!.root
     }
