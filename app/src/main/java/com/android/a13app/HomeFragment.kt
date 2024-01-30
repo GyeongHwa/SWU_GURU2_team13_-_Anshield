@@ -1,6 +1,8 @@
 package com.android.a13app
 
 import android.content.Intent
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -14,6 +16,8 @@ import java.util.Vector
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
     lateinit var adapter: GroupAdapter
+    lateinit var dbManager: DBManager
+    lateinit var sqlitedb: SQLiteDatabase
 
     lateinit var login_id: String
     lateinit var login_name: String
@@ -32,13 +36,46 @@ class HomeFragment : Fragment() {
         binding.tvName.text = login_name + "님의 모임"
 
         //모임목록 리사이클러뷰
+        dbManager = DBManager(requireContext(), DBManager.DB_NAME,null, 1)
+
+        sqlitedb = dbManager.readableDatabase
+
+        //로그인한 계정이 참가한 모든 그룹 조회
         val list = Vector<Group>()
+        var groupName: String = ""
+        var members: String = ""
+        var token: String = ""
 
-        val item1 = Group("부산여행 가는 모임", "별하, 효림, 경화", "123456123456")
-        val item2 = Group("1월20일 회식정산", "별하, 효림, 경화, 아림", "345678345678")
+        var groupQuery: String = ""
+        groupQuery += "SELECT tb_member.token, tb_group.name "
+        groupQuery += "FROM tb_member "
+        groupQuery += "JOIN tb_group ON tb_member.token = tb_group.token "
+        groupQuery += "WHERE tb_member.id = '$login_id' "
+        groupQuery += "ORDER BY tb_member.num DESC"
+        var groupCursor: Cursor
+        groupCursor = sqlitedb.rawQuery(groupQuery, null)
 
-        list.add(item1)
-        list.add(item2)
+        while (groupCursor.moveToNext()) {
+            groupName = groupCursor.getString(groupCursor.getColumnIndexOrThrow("tb_group.name")).toString()
+            token = groupCursor.getString(groupCursor.getColumnIndexOrThrow("tb_member.token")).toString()
+
+            var memberQuery: String = ""
+            memberQuery += "SELECT tb_account.name FROM tb_account "
+            memberQuery += "JOIN tb_member ON tb_account.id = tb_member.id "
+            memberQuery += "WHERE tb_member.token = '$token'"
+            var memberCursor: Cursor
+            memberCursor = sqlitedb.rawQuery(memberQuery, null)
+            while (memberCursor.moveToNext()) {
+                members += memberCursor.getString(memberCursor.getColumnIndexOrThrow("tb_account.name")).toString() + ", "
+            }
+            // while 루프가 끝난 후 ',' 제거
+            members = members.substring(0, members.length-2)
+
+            //리사이클러뷰 아이템 추가
+            val item = Group(groupName, members, token)
+            list.add(item)
+            members = ""
+        }
 
         val layoutManager = LinearLayoutManager(context)
         binding!!.recyclerView.layoutManager = layoutManager
