@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,18 +33,19 @@ class JoinFragment : Fragment() {
         val login_id = arguments?.getString("ID")
         val login_name = arguments?.getString("NAME")
 
-        dbManager = DBManager(requireContext(), "friendshipDB", null, 1)
+        dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
 
         binding.joinButton.setOnClickListener {
             val enteredToken = binding.joinEditText.text.toString()
 
             // 입력받은 토큰이 tb_group 테이블에 존재하는지 확인하는 함수
             fun isTokenValid(enteredToken: String): Boolean {
-                val dbManager = DBManager(context, "friendshipDB", null, 1)
-                val sqlitedb = dbManager.readableDatabase
+                val dbManager = DBManager(context, DBManager.DB_NAME, null, 1)
+                sqlitedb = dbManager.readableDatabase
 
                 val query = "SELECT * FROM tb_group WHERE token = '$enteredToken'"
-                val cursor = sqlitedb.rawQuery(query, null)
+                val cursor:Cursor
+                cursor = sqlitedb.rawQuery(query, null)
 
                 val isValid = cursor.count > 0
 
@@ -56,7 +58,7 @@ class JoinFragment : Fragment() {
 
             // tb_member 테이블에 사용자 ID와 토큰 추가하는 함수
             fun addMemberToTeam(login_id: String, enteredToken: String) {
-                val dbManager = DBManager(context, "friendshipDB", null, 1)
+                val dbManager = DBManager(context, DBManager.DB_NAME, null, 1)
                 val sqlitedb = dbManager.writableDatabase
 
                 sqlitedb.execSQL("INSERT INTO tb_member(id, token) VALUES('$login_id', '$enteredToken');")

@@ -26,7 +26,7 @@ class RegisterActivity : AppCompatActivity() {
         edtName = findViewById(R.id.edtName)
         btnRegisterForm = findViewById(R.id.btnRegisterForm)
 
-        dbManager = DBManager(this, "friendshipDB", null, 1)
+        dbManager = DBManager(this, DBManager.DB_NAME, null, 1)
 
         btnRegisterForm.setOnClickListener {
             var str_id: String = edtId.text.toString()

@@ -30,7 +30,7 @@ class CreateFragment : Fragment() {
         val login_id = arguments?.getString("ID")
         val login_name = arguments?.getString("NAME")
 
-        dbManager = DBManager(requireContext(), "friendshipDB", null, 1)
+        dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
 
         binding.btnCreate.setOnClickListener {
             var str_groupName: String = binding.edtGroupName.text.toString()

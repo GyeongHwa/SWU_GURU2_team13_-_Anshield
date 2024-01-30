@@ -28,7 +28,7 @@ class ExpenseFragment : Fragment() {
         val login_name = arguments?.getString("NAME")
         val token = arguments?.getString("TOKEN")
 
-        dbManager = DBManager(requireContext(), "friendshipDB", null, 1)
+        dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
 
         binding.btnExAdd.setOnClickListener {
             var str_payer = binding.edtPayer.text.toString()

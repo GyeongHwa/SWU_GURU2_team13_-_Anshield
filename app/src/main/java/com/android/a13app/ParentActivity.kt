@@ -13,9 +13,6 @@ import com.android.a13app.databinding.ActivityParentBinding
 class ParentActivity : AppCompatActivity() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var binding: ActivityParentBinding
-    private lateinit var homeFragment: HomeFragment
-    private lateinit var createFragment: CreateFragment
-    private lateinit var joinFragment: JoinFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
