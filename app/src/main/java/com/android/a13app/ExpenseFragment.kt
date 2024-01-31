@@ -94,16 +94,7 @@ class ExpenseFragment : Fragment() {
             } else {
                 sqlitedb = dbManager.writableDatabase
 
-                //primary key 생성
-                var cursor: Cursor
-                var num: Int = 0
-                cursor = sqlitedb.rawQuery("SELECT num FROM tb_expense ORDER BY num DESC", null)
-                if (cursor.count != 0) {
-                    cursor.moveToFirst()
-                    num = cursor.getInt(cursor.getColumnIndexOrThrow("num")) + 1
-                }
-
-                sqlitedb.execSQL("INSERT INTO tb_expense VALUES ($num, '$token', '$str_payer', '$str_expense', '$str_location', '$str_date')")
+                sqlitedb.execSQL("INSERT INTO tb_expense(token, payer, expense, location, date) VALUES ('$token', '$str_payer', $str_expense, '$str_location', '$str_date')")
                 sqlitedb.close()
 
                 Toast.makeText(requireContext(), "지출항목이 추가되었습니다", Toast.LENGTH_SHORT).show()
