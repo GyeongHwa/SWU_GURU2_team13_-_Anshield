@@ -3,7 +3,6 @@ package com.android.a13app
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.android.a13app.databinding.FragmentExpenseBinding
-import java.util.Vector
 
 class ExpenseFragment : Fragment() {
     lateinit var binding: FragmentExpenseBinding
@@ -20,8 +18,12 @@ class ExpenseFragment : Fragment() {
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
 
+    lateinit var bundle: Bundle
+    lateinit var mapFragment: MapFragment
     lateinit var detailsFragment: DetailsFragment
+    lateinit var items: Array<String>
     lateinit var payer: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,6 +36,17 @@ class ExpenseFragment : Fragment() {
         //val token = arguments?.getString("TOKEN")
         val token = "890123456789"
 
+        //MapFragment에서 돌아왔을 때 이전 값 유지
+        binding.edtExpense.setText(arguments?.getString("EXPENSE"))
+        binding.edtLocation.setText(arguments?.getString("LOCATION"))
+        binding.edtDate.setText(arguments?.getString("DATE"))
+
+        //Fragment로 전달할 값
+        bundle = Bundle()
+        bundle.putString("ID", login_id)
+        bundle.putString("NAME", login_name)
+        bundle.putString("TOKEN", token)
+
         dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
 
         //결제한 사람 드롭다운 메뉴
@@ -41,7 +54,7 @@ class ExpenseFragment : Fragment() {
 
         var payerCursor: Cursor
         payerCursor = sqlitedb.rawQuery("SELECT id FROM tb_member WHERE token= '$token'", null)
-        val items: Array<String> = Array(payerCursor.count) {index ->
+        items = Array(payerCursor.count) {index ->
             payerCursor.moveToNext()
             payerCursor.getString(payerCursor.getColumnIndexOrThrow("id")).toString()
         }
@@ -50,6 +63,11 @@ class ExpenseFragment : Fragment() {
 
         binding.spinnerPayer.adapter = memberAdapter
 
+        if (arguments?.getString("PAYER") != null) {
+            val indexOfSelectedItem = items.indexOf(arguments?.getString("PAYER"))
+            binding.spinnerPayer.setSelection(indexOfSelectedItem)
+        }
+
         binding.spinnerPayer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>,
@@ -57,7 +75,7 @@ class ExpenseFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                payer = items[position].toString()
+                payer = items[position]
             }
             override fun onNothingSelected(parentView: AdapterView<*>) {}
         }
@@ -90,15 +108,23 @@ class ExpenseFragment : Fragment() {
 
                 Toast.makeText(requireContext(), "지출항목이 추가되었습니다", Toast.LENGTH_SHORT).show()
 
-                var bundle = Bundle()
-                bundle.putString("ID", login_id)
-                bundle.putString("NAME", login_name)
-                bundle.putString("TOKEN", token)
-
                 detailsFragment = DetailsFragment()
                 detailsFragment.arguments = bundle
                 requireActivity().supportFragmentManager.beginTransaction().replace(R.id.rootLayout, detailsFragment).commit()
             }
+        }
+
+        //지도API 호출
+        binding.btnMap.setOnClickListener {
+            //사용자 입력값 저장
+            bundle.putString("PAYER", payer)
+            bundle.putString("EXPENSE", binding.edtExpense.text.toString())
+            bundle.putString("LOCATION", binding.edtLocation.text.toString())
+            bundle.putString("DATE", binding.edtDate.text.toString())
+
+            mapFragment = MapFragment()
+            mapFragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction().replace(R.id.rootLayout, mapFragment).commit()
         }
         dbManager.close()
 
