@@ -16,12 +16,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="결제한 사람"/>
-        <EditText
-            android:id="@+id/edtPayer"
+        <Spinner
+            android:id="@+id/spinnerPayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:hint="이름 입력" />
+            android:prompt="@string/select_an_item"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
