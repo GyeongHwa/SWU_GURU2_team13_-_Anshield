@@ -20,6 +20,17 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="정산 결과"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:textColor="@color/cardview_light_background"
+            android:background="@color/cardview_dark_background"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/calculateScaleRecyclerView"
             android:layout_width="match_parent"

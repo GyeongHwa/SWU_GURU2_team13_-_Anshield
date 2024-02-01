@@ -1,35 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:backgroundTint="@color/cardview_dark_background"
+    android:padding="10dp"
+    android:layout_margin="10dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:padding="10dp"
-        android:background="#dddddd"
         android:orientation="vertical">
         <TextView
             android:id="@+id/tvExpensePerson"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="결제한 사람: "/>
+            android:text="결제한 사람: "
+            android:textColor="@color/cardview_light_background"/>
         <TextView
             android:id="@+id/tvExpenseMoney"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="결제 금액: "/>
+            android:text="결제 금액: "
+            android:textColor="@color/cardview_light_background"/>
 
         <TextView
             android:id="@+id/tvExpensePlace"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장소: "/>
+            android:text="장소: "
+            android:textColor="@color/cardview_light_background"/>
         <TextView
             android:id="@+id/tvExpensedDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="날짜: "/>
+            android:text="날짜: "
+            android:textColor="@color/cardview_light_background"/>
 
     </LinearLayout>
 

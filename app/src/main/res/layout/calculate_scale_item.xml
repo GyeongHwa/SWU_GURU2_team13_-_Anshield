@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cvCalculateExpense"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    app:cardBackgroundColor="#F44336"
+    app:cardCornerRadius="20dp">
 
     <LinearLayout
         android:id="@+id/llCalculateExpense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:background="#F0F0F0"
-        android:padding="10dp" >
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/tvCalculateExpense"
@@ -21,6 +24,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="우정!"
+            android:textColor="@color/md_theme_background"
             android:textSize="16sp"
             android:textStyle="bold" />
 
