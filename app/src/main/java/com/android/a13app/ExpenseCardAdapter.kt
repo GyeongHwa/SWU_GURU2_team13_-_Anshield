@@ -21,10 +21,10 @@ class ExpenseCardAdapter(private val context: Context, private val items: Vector
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
-        holder.binding.tvExpensePerson.text = item.expensePerson
-        holder.binding.tvExpenseMomey.text = item.expenseMomey
-        holder.binding.tvExpensePlace.text = item.expensePlace
-        holder.binding.tvExpensedDate.text = item.expenseDate
+        holder.binding.tvExpensePerson.text = "결제한 사람: " + item.expensePerson
+        holder.binding.tvExpenseMoney.text = "금액: " + item.expenseMoney
+        holder.binding.tvExpensePlace.text = "장소: " + item.expensePlace
+        holder.binding.tvExpensedDate.text = "날짜: " + item.expenseDate
     }
 
     inner class ViewHolder(var binding: ExpensecardItemBinding) : RecyclerView.ViewHolder(binding.root)

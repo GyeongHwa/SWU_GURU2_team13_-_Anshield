@@ -47,13 +47,23 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         //지출항목목록 리사이클러뷰
         val list = Vector<ExpenseCard>()
 
-        val item1 = ExpenseCard("별하", "40,000원", "부산", "2024.01.28")
-        val item2 = ExpenseCard("효림", "400,000원", "서울", "2024.01.29")
-        val item3 = ExpenseCard("경화", "600,000원", "서울", "2024.01.30")
+        //지출항목 조회하는 SELECT문
+        var expenseQuery: String = ""
+        expenseQuery += "SELECT tb_account.name, tb_expense.expense, tb_expense.location, tb_expense.date FROM tb_expense "
+        expenseQuery += "JOIN tb_account ON tb_account.id = tb_expense.payer "
+        expenseQuery += "WHERE tb_expense.token='$token' "
+        expenseQuery += "ORDER BY tb_expense.date DESC"
+        var cursor: Cursor
+        cursor = sqlitedb.rawQuery(expenseQuery, null)
+        while (cursor.moveToNext()) {
+            val str_payer = cursor.getString(0).toString()
+            val str_expense = cursor.getString(1).toString()
+            val str_location = cursor.getString(2).toString()
+            val str_date = cursor.getString(3).toString()
 
-        list.add(item1)
-        list.add(item2)
-        list.add(item3)
+            val item = ExpenseCard(str_payer, str_expense, str_location, str_date)
+            list.add(item)
+        }
 
         val layoutManager = LinearLayoutManager(context)
         binding!!.expenseRecyclerView.layoutManager = layoutManager
@@ -61,9 +71,16 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         adapter = ExpenseCardAdapter(requireContext(), list)
         binding!!.expenseRecyclerView.adapter = adapter
 
+        //총 금액 출력
+        var sumExpense: Int = 0
+        for (item in list) {
+            val expense = item.expenseMoney.toInt()
+            sumExpense += expense
+        }
+        binding!!.tvSumExpense.text = "총 금액 : " + sumExpense.toString()
+
         //멤버 리사이클러뷰
         val memberList = Vector<Member>()
-        val member: String = ""
 
         var memberQuery = ""
         memberQuery += "SELECT tb_account.name FROM tb_account "

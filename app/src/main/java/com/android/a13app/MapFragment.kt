@@ -26,12 +26,17 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     ): View? {
         binding = FragmentMapBinding.inflate(inflater, container, false)
 
-        //ExpenseFragment에서 입력했던 값 보존
+        //ExpenseFragment에서 입력했던 값과 로그인 정보 보존
         var bundle = Bundle()
         bundle.putString("PAYER", arguments?.getString("PAYER").toString())
         bundle.putString("EXPENSE", arguments?.getString("EXPENSE").toString())
         bundle.putString("LOCATION", arguments?.getString("LOCATION").toString())
         bundle.putString("DATE", arguments?.getString("DATE").toString())
+
+        bundle.putString("ID", arguments?.getString("ID").toString())
+        bundle.putString("NAME", arguments?.getString("NAME").toString())
+        bundle.putString("G_NAME", arguments?.getString("G_NAME").toString())
+        bundle.putString("TOKEN", arguments?.getString("TOKEN").toString())
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
