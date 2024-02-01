@@ -13,10 +13,6 @@ import java.util.Vector
 class CalculateAdapter(private val context: Context, private val calculateResult: Vector<Calculate>) :
     RecyclerView.Adapter<CalculateAdapter.ViewHolder>() {
 
-//    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        val calaulateTextView: TextView = itemView.findViewById(R.id.calculateTextView)
-//    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = CalculateItemBinding.inflate(layoutInflater, parent, false)

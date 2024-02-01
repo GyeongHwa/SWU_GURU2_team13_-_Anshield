@@ -47,6 +47,7 @@ class CalculateFragment : Fragment() {
 
         // 모임 멤버별 지출 금액 가져오기
         val members = Vector<Calculate>()
+        val memberScale = Vector<CalculateScale>()
 
         sqlitedb = dbManager.readableDatabase
 
@@ -75,53 +76,54 @@ class CalculateFragment : Fragment() {
         sqlitedb.close()
 
         // RecyclerView 초기화
-//        val recyclerView: RecyclerView = binding.root.findViewById(R.id.calculateRecyclerView)
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
         binding!!.calculateRecyclerView.layoutManager = LinearLayoutManager(context)
 
         // CalculateAdapter 생성 및 연결
-        //val calculateResult = mutableListOf<String>()
         val adapter = CalculateAdapter(requireContext(), members)
         binding!!.calculateRecyclerView.adapter = adapter
 
-/*
-        // 총 지출 금액 출력
-        val totalSpent = members.sumByDouble { it.third }
+
+        // 총 지출 금액 계산
+        val totalSpent = members.sumByDouble { it.expense }
 
         // 평균 금액 계산
         val average = totalSpent / members.size
 
         // 차액 계산
-        for (index in members.indices) {
-            val member = members[index]
-            members[index] = member.copy(third = member.third - average)
+        for (item in members) {
+
+            memberScale.add(CalculateScale(item.id, item.name, item.expense, item.expense - average, "", 0.0))
         }
 
         // 정산 결과를 출력
-        for (payer in members) {
-            for (receiver in members) {
-                if (payer.third < 0 && receiver.third > 0) {
-                    val amount = Math.min(Math.abs(payer.third), Math.abs(receiver.third))
-                    val updatedPayer = payer.copy(third = payer.third + amount)
-                    val updatedReceiver = receiver.copy(third = receiver.third - amount)
+        for ( i in 0..(memberScale.size - 1)) {
+            for ( j  in 0..(memberScale.size - 1)) {
 
-                    calculateResult.add("${updatedPayer.second} 님 -> ${updatedReceiver.second} 님: $amount 원 송금해주시면 됩니다")
+                var payer = memberScale[i]
+                var receiver = memberScale[j]
 
-                    Toast.makeText(requireContext(), login_name + "님, 즐거운 정산 되세요!", Toast.LENGTH_SHORT).show()
+                if (payer.difference < 0 && receiver.difference > 0) {
+                    var amount = Math.min(Math.abs(payer.difference), Math.abs(receiver.difference))
+
+                    payer.difference = payer.difference + amount
+                    receiver.difference = receiver.difference - amount
+
+                    memberScale[i].receiver = receiver.name
+                    memberScale[i].amount = amount
                 }
             }
         }
 
- */
+        // RecyclerView 초기화
+        binding!!.calculateScaleRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        adapter.notifyDataSetChanged()
+        // CalculateAdapter 생성 및 연결
+        val adapterScale = CalculateScaleAdapter(requireContext(), memberScale)
+        binding!!.calculateScaleRecyclerView.adapter = adapterScale
+
+        Toast.makeText(requireContext(), login_name + "님, 즐거운 정산 되세요!", Toast.LENGTH_SHORT).show()
 
         dbManager.close()
-
-//        detailsFragment = DetailsFragment()
-//        detailsFragment.arguments = bundle
-//        requireActivity().supportFragmentManager.beginTransaction().replace(R.id.rootLayout, detailsFragment).commit()
 
         return binding.root
     }
