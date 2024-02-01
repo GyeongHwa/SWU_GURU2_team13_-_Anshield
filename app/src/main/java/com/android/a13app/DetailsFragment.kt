@@ -18,7 +18,7 @@ import java.util.Vector
 class DetailsFragment : Fragment(), View.OnClickListener {
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
-
+    lateinit var groupName: String
     lateinit var binding: FragmentDetailsBinding
     lateinit var adapter: ExpenseCardAdapter
     lateinit var memberAdapter: MemberAdapter
@@ -30,12 +30,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         //btnAddExpense클릭시 DatailsFragment에서 ExpenseFragment로 이동 및 ID,NAME전달
         binding.btnAddExpense.setOnClickListener {
             val parentActivity = activity as ParentActivity
-            parentActivity.setFragment(ExpenseFragment())
-        }
-        //btnCalculate클릭시 DatailsFragment에서 CalculateFragment로 이동 및 ID,NAME전달
-        binding.btnCalculate.setOnClickListener {
-            val parentActivity = activity as ParentActivity
-            parentActivity.setFragment(CalculateFragment())
+            parentActivity.setFragment(ExpenseFragment(), null, null)
         }
     }
 
@@ -99,6 +94,12 @@ class DetailsFragment : Fragment(), View.OnClickListener {
 
         memberAdapter = MemberAdapter(requireContext(), memberList)
         binding!!.membersRecyclerView.adapter = memberAdapter
+
+        //btnCalculate클릭시 DatailsFragment에서 CalculateFragment로 이동 및 ID,NAME전달
+        binding.btnCalculate.setOnClickListener {
+            val parentActivity = activity as ParentActivity
+            parentActivity.setFragment(CalculateFragment(), groupName, "123456789012")
+        }
 
         return binding!!.root
     }

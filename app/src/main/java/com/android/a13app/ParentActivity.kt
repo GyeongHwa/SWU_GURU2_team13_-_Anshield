@@ -26,21 +26,21 @@ class ParentActivity : AppCompatActivity() {
 
         title = "우정!"
 
-        setFragment(HomeFragment())
+        setFragment(HomeFragment(), null, null)
 
         //네비게이션 드로어 선택하면 해당 Fragment로 전환
         binding.navigationView.setNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.tabHome -> setFragment(HomeFragment())
-                R.id.tabCreate -> setFragment(CreateFragment())
-                R.id.tabJoin -> setFragment(JoinFragment())
+                R.id.tabHome -> setFragment(HomeFragment(), null, null)
+                R.id.tabCreate -> setFragment(CreateFragment(), null, null)
+                R.id.tabJoin -> setFragment(JoinFragment(), null, null)
             }
             binding.drawerLayout.closeDrawers()
             false
         }
     }
     //입력받은 Fragment로 화면 전환 및 데이터 전달 함수
-    fun setFragment(fragment: Fragment){
+    fun setFragment(fragment: Fragment, groupName: String?, token: String?){
         //ID와 NAME 정보가져오기
         var intent = intent
         var id = intent.getStringExtra("ID")
@@ -49,6 +49,8 @@ class ParentActivity : AppCompatActivity() {
         var bundle = Bundle()
         bundle.putString("ID", id)
         bundle.putString("NAME", name)
+        bundle.putString("G_NAME",groupName)
+        bundle.putString("TOKEN", token)
 
         fragment.arguments = bundle
         supportFragmentManager.beginTransaction().replace(R.id.rootLayout, fragment).commit()
