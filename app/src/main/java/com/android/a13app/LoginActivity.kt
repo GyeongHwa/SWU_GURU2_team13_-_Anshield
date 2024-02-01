@@ -36,7 +36,7 @@ class LoginActivity : AppCompatActivity() {
             sqlitedb = dbManager.readableDatabase
 
             var cursor: Cursor
-            cursor = sqlitedb.rawQuery("SELECT * FROM tb_account WHERE id='"+str_id+"' AND pw='"+str_pw+"'", null)
+            cursor = sqlitedb.rawQuery("SELECT * FROM tb_account WHERE id=? AND pw=?", arrayOf(str_id, str_pw))
             if (cursor.count == 1) {
                 cursor.moveToFirst()
                 var id = cursor.getString(cursor.getColumnIndexOrThrow("id")).toString()

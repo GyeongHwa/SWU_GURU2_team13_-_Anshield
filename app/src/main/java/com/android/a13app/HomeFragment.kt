@@ -50,10 +50,10 @@ class HomeFragment : Fragment() {
         groupQuery += "SELECT tb_member.token, tb_group.name "
         groupQuery += "FROM tb_member "
         groupQuery += "JOIN tb_group ON tb_member.token = tb_group.token "
-        groupQuery += "WHERE tb_member.id = '$login_id' "
+        groupQuery += "WHERE tb_member.id = ? "
         groupQuery += "ORDER BY tb_member.num DESC"
         var groupCursor: Cursor
-        groupCursor = sqlitedb.rawQuery(groupQuery, null)
+        groupCursor = sqlitedb.rawQuery(groupQuery, arrayOf(login_id))
 
         while (groupCursor.moveToNext()) {
             groupName = groupCursor.getString(groupCursor.getColumnIndexOrThrow("tb_group.name")).toString()
@@ -62,9 +62,9 @@ class HomeFragment : Fragment() {
             var memberQuery: String = ""
             memberQuery += "SELECT tb_account.name FROM tb_account "
             memberQuery += "JOIN tb_member ON tb_account.id = tb_member.id "
-            memberQuery += "WHERE tb_member.token = '$token'"
+            memberQuery += "WHERE tb_member.token = ?"
             var memberCursor: Cursor
-            memberCursor = sqlitedb.rawQuery(memberQuery, null)
+            memberCursor = sqlitedb.rawQuery(memberQuery, arrayOf(token))
             while (memberCursor.moveToNext()) {
                 members += memberCursor.getString(memberCursor.getColumnIndexOrThrow("tb_account.name")).toString() + ", "
             }

@@ -54,7 +54,7 @@ class ExpenseFragment : Fragment() {
         sqlitedb = dbManager.readableDatabase
 
         var payerCursor: Cursor
-        payerCursor = sqlitedb.rawQuery("SELECT id FROM tb_member WHERE token= '$token'", null)
+        payerCursor = sqlitedb.rawQuery("SELECT id FROM tb_member WHERE token= ?", arrayOf(token))
         items = Array(payerCursor.count) {index ->
             payerCursor.moveToNext()
             payerCursor.getString(payerCursor.getColumnIndexOrThrow("id")).toString()
@@ -96,7 +96,8 @@ class ExpenseFragment : Fragment() {
             } else {
                 sqlitedb = dbManager.writableDatabase
 
-                sqlitedb.execSQL("INSERT INTO tb_expense(token, payer, expense, location, date) VALUES ('$token', '$str_payer', $str_expense, '$str_location', '$str_date')")
+                sqlitedb.execSQL("INSERT INTO tb_expense(token, payer, expense, location, date) VALUES (?, ?, ?, ?, ?)"
+                    , arrayOf(token, str_payer, str_expense, str_location, str_date))
                 sqlitedb.close()
 
                 Toast.makeText(requireContext(), "지출항목이 추가되었습니다", Toast.LENGTH_SHORT).show()

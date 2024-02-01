@@ -44,11 +44,11 @@ class RegisterActivity : AppCompatActivity() {
 
                 //아이디 중복확인
                 var cursor: Cursor
-                cursor = sqlitedb.rawQuery("SELECT * FROM tb_account WHERE id='"+str_id+"'", null)
+                cursor = sqlitedb.rawQuery("SELECT * FROM tb_account WHERE id=?", arrayOf(str_id))
                 if (cursor.count > 0) {
                     Toast.makeText(this, "이미 존재하는 아이디입니다", Toast.LENGTH_SHORT).show()
                 } else if (cursor.count == 0) { //중복되는 아이디가 없으면 회원정보 DB에 INSERT
-                    sqlitedb.execSQL("INSERT INTO tb_account VALUES ('$str_id', '$str_pw', '$str_name')")
+                    sqlitedb.execSQL("INSERT INTO tb_account VALUES (?, ?, ?)", arrayOf(str_id, str_pw, str_name))
                     sqlitedb.close()
 
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()

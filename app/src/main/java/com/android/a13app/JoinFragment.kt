@@ -43,9 +43,9 @@ class JoinFragment : Fragment() {
                 val dbManager = DBManager(context, DBManager.DB_NAME, null, 1)
                 sqlitedb = dbManager.readableDatabase
 
-                val query = "SELECT * FROM tb_group WHERE token = '$enteredToken'"
+                val query = "SELECT * FROM tb_group WHERE token = ?"
                 val cursor:Cursor
-                cursor = sqlitedb.rawQuery(query, null)
+                cursor = sqlitedb.rawQuery(query, arrayOf(enteredToken))
 
                 val isValid = cursor.count > 0
 
@@ -61,7 +61,7 @@ class JoinFragment : Fragment() {
                 val dbManager = DBManager(context, DBManager.DB_NAME, null, 1)
                 val sqlitedb = dbManager.writableDatabase
 
-                sqlitedb.execSQL("INSERT INTO tb_member(id, token) VALUES('$login_id', '$enteredToken');")
+                sqlitedb.execSQL("INSERT INTO tb_member(id, token) VALUES(?, ?)", arrayOf(login_id, enteredToken))
 
                 sqlitedb.close()
                 dbManager.close()

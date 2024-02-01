@@ -9,9 +9,6 @@ import com.android.a13app.databinding.MemberItemBinding
 import java.util.Vector
 
 class MemberAdapter(private val context: Context, private val items: Vector<Member>) : RecyclerView.Adapter<MemberAdapter.ViewHolder>() {
-    lateinit var dbManager: DBManager
-    lateinit var sqlitedb: SQLiteDatabase
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = MemberItemBinding.inflate(layoutInflater, parent, false)

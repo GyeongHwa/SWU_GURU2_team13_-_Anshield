@@ -85,9 +85,9 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         var memberQuery = ""
         memberQuery += "SELECT tb_account.name FROM tb_account "
         memberQuery += "JOIN tb_member ON tb_account.id = tb_member.id "
-        memberQuery += "WHERE tb_member.token = '$token'"
+        memberQuery += "WHERE tb_member.token = ?"
         var memberCursor: Cursor
-        memberCursor = sqlitedb.rawQuery(memberQuery, null)
+        memberCursor = sqlitedb.rawQuery(memberQuery, arrayOf(token))
 
         while (memberCursor.moveToNext()) {
             val memberItem = Member(

@@ -52,7 +52,8 @@ class CalculateFragment : Fragment() {
         sqlitedb = dbManager.readableDatabase
 
         val cursor: Cursor = sqlitedb.rawQuery(
-            "SELECT tb_account.id, tb_account.name FROM tb_account JOIN tb_member ON tb_account.id = tb_member.id WHERE tb_member.token = '$token'", null
+            "SELECT tb_account.id, tb_account.name FROM tb_account JOIN tb_member ON tb_account.id = tb_member.id WHERE tb_member.token = ?",
+            arrayOf(token)
         )
 
         while (cursor.moveToNext()) {
