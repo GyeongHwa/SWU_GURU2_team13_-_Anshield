@@ -4,7 +4,6 @@ import android.app.ActionBar
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,7 +44,6 @@ class CalculateFragment : Fragment() {
         }
 
         dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
-        Log.i("test!","db 불러짐")
 
         // 모임 멤버별 지출 금액 가져오기
         val members = Vector<Calculate>()
@@ -55,21 +53,17 @@ class CalculateFragment : Fragment() {
         val cursor: Cursor = sqlitedb.rawQuery(
             "SELECT tb_account.id, tb_account.name FROM tb_account JOIN tb_member ON tb_account.id = tb_member.id WHERE tb_member.token = '$token'", null
         )
-        Log.i("test!", "이름 가져옴 ${cursor.count}")
 
         while (cursor.moveToNext()) {
             val memberId = cursor.getString(0)
             val memberName = cursor.getString(1)
-            Log.i("test!", "$memberId, $token")
 
             val cursor2: Cursor = sqlitedb.rawQuery(
                 "SELECT COALESCE(SUM(expense), 0) FROM tb_expense WHERE token = '$token' AND payer = '$memberId'", null
             )
-            Log.i("test!", "금액 가져옴")
 
             while (cursor2.moveToNext()) {
                 val expenseAmount = cursor2.getDouble(0)
-                Log.i("test!", "금액 가져옴 $expenseAmount")
                 members.add(Calculate(memberId, memberName, expenseAmount))
             }
 
@@ -79,8 +73,6 @@ class CalculateFragment : Fragment() {
         cursor.close()
 
         sqlitedb.close()
-
-        Log.i("test!", "리사이클러뷰")
 
         // RecyclerView 초기화
 //        val recyclerView: RecyclerView = binding.root.findViewById(R.id.calculateRecyclerView)
@@ -92,8 +84,6 @@ class CalculateFragment : Fragment() {
         //val calculateResult = mutableListOf<String>()
         val adapter = CalculateAdapter(requireContext(), members)
         binding!!.calculateRecyclerView.adapter = adapter
-
-        Log.i("test!", "리사이클러뷰 연결")
 
 /*
         // 총 지출 금액 출력
