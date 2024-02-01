@@ -98,7 +98,6 @@ class CalculateFragment : Fragment() {
 /*
         // 총 지출 금액 출력
         val totalSpent = members.sumByDouble { it.third }
-        calculateResult.add("\n총 지출 금액: " + totalSpent + "원")
 
         // 평균 금액 계산
         val average = totalSpent / members.size
