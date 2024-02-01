@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -31,6 +32,10 @@ class GroupAdapter(private val context: Context, private val items: Vector<Group
 
         holder.binding.root.setOnClickListener {
             detailsFragment = DetailsFragment()
+
+            Log.i("TEST!", item.token)
+            Log.i("TEST!", item.token)
+
             var bundle = Bundle()
             bundle.putString("TOKEN", item.token)
             bundle.putString("G_NAME", item.groupName)
