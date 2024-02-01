@@ -22,7 +22,7 @@ class CalculateAdapter(private val context: Context, private val calculateResult
     // 멤버별 총 지출 금액 출력
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = calculateResult[position]
-        holder.binding.tvMemberExpense.text = "${data.name} 님의 지출 금액: ${data.expense.toInt()} 원"
+        holder.binding.tvMemberExpense.text = "${data.name} 님의 지출 금액\n${data.expense.toInt()} 원"
     }
 
     override fun getItemCount(): Int {

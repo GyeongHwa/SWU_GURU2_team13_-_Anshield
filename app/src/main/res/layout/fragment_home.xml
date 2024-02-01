@@ -16,11 +16,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="님의 모임"/>
+
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="로그아웃"/>
+            android:text="로그아웃"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

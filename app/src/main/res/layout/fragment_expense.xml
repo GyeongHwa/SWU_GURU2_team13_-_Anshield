@@ -12,10 +12,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="1">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="결제한 사람"/>
+            android:text="결제한 사람"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
         <Spinner
             android:id="@+id/spinnerPayer"
             android:layout_width="match_parent"
@@ -23,10 +26,13 @@
             android:prompt="@string/select_an_item"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="30dp"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="결제 금액"/>
+            android:text="결제 금액"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
         <EditText
             android:id="@+id/edtExpense"
             android:layout_width="match_parent"
@@ -34,10 +40,13 @@
             android:layout_marginBottom="30dp"
             android:hint="결제금액 입력"
             android:inputType="number"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="결제 장소"/>
+            android:text="결제 장소"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,17 +59,23 @@
                 android:layout_marginBottom="30dp"
                 android:layout_marginRight="10dp"
                 android:hint="주소 입력" />
+
             <Button
                 android:id="@+id/btnMap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="지도에서\n찾기"/>
+                android:text="지도에서 찾기"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textStyle="bold" />
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="날짜"/>
+            android:text="날짜"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
         <EditText
             android:id="@+id/edtDate"
             android:layout_width="match_parent"
@@ -68,10 +83,13 @@
             android:layout_marginBottom="30dp"
             android:hint="날짜 입력 ex.YYYY.MM.DD." />
     </LinearLayout>
+
     <Button
         android:id="@+id/btnExAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="지출항목 추가"/>
+        android:text="지출항목 추가"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold" />
 
 </LinearLayout>

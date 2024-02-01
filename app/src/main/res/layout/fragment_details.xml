@@ -44,7 +44,8 @@
             android:id="@+id/tvToken"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="참가토큰: "/>
+            android:text="참가토큰: "
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/expenseRecyclerView"

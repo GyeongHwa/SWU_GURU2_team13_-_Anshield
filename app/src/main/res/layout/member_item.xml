@@ -9,5 +9,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:backgroundTint="#9f9f9f"
-        android:text="name" />
+        android:text="name"
+        android:textStyle="bold" />
 </androidx.cardview.widget.CardView>

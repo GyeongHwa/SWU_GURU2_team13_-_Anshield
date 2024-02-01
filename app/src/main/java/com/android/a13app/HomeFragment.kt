@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         login_name = arguments?.getString("NAME").toString()
         //Toast.makeText(this.context, login_id+", "+login_name, Toast.LENGTH_SHORT).show()
 
-        binding.tvName.text = login_name + "님의 모임"
+        binding.tvName.text = login_name + " 님의 모임"
 
         //모임목록 리사이클러뷰
         dbManager = DBManager(requireContext(), DBManager.DB_NAME,null, 1)

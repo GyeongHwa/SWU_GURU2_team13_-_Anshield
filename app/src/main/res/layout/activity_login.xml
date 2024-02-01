@@ -13,10 +13,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_weight="1">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="아이디"/>
+            android:text="아이디"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
         <EditText
             android:id="@+id/edtId"
             android:layout_width="match_parent"
@@ -27,7 +30,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="비밀번호" />
+            android:text="비밀번호"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
         <EditText
             android:id="@+id/edtPassword"
             android:layout_width="match_parent"
@@ -36,10 +41,12 @@
             android:hint="비밀번호 입력"
             android:inputType="textPassword"/>
     </LinearLayout>
+
     <Button
         android:id="@+id/btnLoginForm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="로그인"/>
+        android:text="로그인"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
 </LinearLayout>
