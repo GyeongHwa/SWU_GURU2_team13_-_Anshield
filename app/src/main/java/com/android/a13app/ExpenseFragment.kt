@@ -33,8 +33,8 @@ class ExpenseFragment : Fragment() {
         //로그인 및 모임 정보 가져오기
         val login_id = arguments?.getString("ID")
         val login_name = arguments?.getString("NAME")
-        //val token = arguments?.getString("TOKEN")
-        val token = "890123456789"
+        val groupName = arguments?.getString("G_NAME")
+        val token = arguments?.getString("TOKEN")
 
         //MapFragment에서 돌아왔을 때 이전 값 유지
         binding.edtExpense.setText(arguments?.getString("EXPENSE"))
@@ -46,6 +46,7 @@ class ExpenseFragment : Fragment() {
         bundle.putString("ID", login_id)
         bundle.putString("NAME", login_name)
         bundle.putString("TOKEN", token)
+        bundle.putString("G_NAME", groupName)
 
         dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
 
@@ -79,6 +80,7 @@ class ExpenseFragment : Fragment() {
             }
             override fun onNothingSelected(parentView: AdapterView<*>) {}
         }
+        sqlitedb.close()
 
         //지출항목 저장
         binding.btnExAdd.setOnClickListener {

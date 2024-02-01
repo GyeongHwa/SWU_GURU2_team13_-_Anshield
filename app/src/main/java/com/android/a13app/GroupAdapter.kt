@@ -34,7 +34,6 @@ class GroupAdapter(private val context: Context, private val items: Vector<Group
             detailsFragment = DetailsFragment()
 
             Log.i("TEST!", item.token)
-            Log.i("TEST!", item.token)
 
             var bundle = Bundle()
             bundle.putString("TOKEN", item.token)

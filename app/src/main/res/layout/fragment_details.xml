@@ -22,12 +22,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginTop="10dp"
                 android:scrollbars="horizontal"/>
 
             <Button
                 android:id="@+id/btnAddExpense"
                 android:layout_width="74dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 android:text="+"
@@ -53,7 +56,7 @@
 
         <TextView
             android:layout_weight="1"
-            android:id="@+id/textView"
+            android:id="@+id/tvSumExpense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="총금액: "
