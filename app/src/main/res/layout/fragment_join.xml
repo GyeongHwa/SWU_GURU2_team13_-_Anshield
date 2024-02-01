@@ -25,6 +25,7 @@
             android:id="@+id/joinEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:hint="토큰 입력"
             android:inputType="text"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
