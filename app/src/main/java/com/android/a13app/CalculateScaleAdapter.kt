@@ -27,6 +27,8 @@ class CalculateScaleAdapter(private val context: Context, private val calculateS
             holder.binding.tvCalculateExpense.text = "${data.name} 님 -> ${data.receiver} 님: ${data.amount.toInt()} 원 송금해주시면 됩니다"
         } else{
             holder.binding.cvCalculateExpense.visibility = android.view.View.GONE
+            holder.binding.llCalculateExpense.visibility = android.view.View.GONE
+            holder.binding.tvCalculateExpense.visibility = android.view.View.GONE
         }
     }
 
