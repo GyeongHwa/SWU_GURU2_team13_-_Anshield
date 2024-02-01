@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.a13app.databinding.CalculateItemBinding
 import com.android.a13app.databinding.GroupItemBinding
+import java.text.NumberFormat
+import java.util.Locale
 import java.util.Vector
 
 class CalculateAdapter(private val context: Context, private val calculateResult: Vector<Calculate>) :
@@ -22,7 +24,8 @@ class CalculateAdapter(private val context: Context, private val calculateResult
     // 멤버별 총 지출 금액 출력
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = calculateResult[position]
-        holder.binding.tvMemberExpense.text = "${data.name} 님의 지출 금액\n${data.expense.toInt()} 원"
+        val expense: String = NumberFormat.getNumberInstance(Locale.US).format(data.expense.toInt()).toString()
+        holder.binding.tvMemberExpense.text = "${data.name} 님의 지출 금액\n${expense}원"
     }
 
     override fun getItemCount(): Int {

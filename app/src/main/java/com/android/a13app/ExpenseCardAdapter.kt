@@ -4,9 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.android.a13app.databinding.ExpensecardItemBinding
-import com.android.a13app.databinding.GroupItemBinding
+import java.text.NumberFormat
+import java.util.Locale
 import java.util.Vector
 
 class ExpenseCardAdapter(private val context: Context, private val items: Vector<ExpenseCard>) : RecyclerView.Adapter<ExpenseCardAdapter.ViewHolder>(){
@@ -22,7 +22,7 @@ class ExpenseCardAdapter(private val context: Context, private val items: Vector
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
         holder.binding.tvExpensePerson.text = "결제한 사람: " + item.expensePerson
-        holder.binding.tvExpenseMoney.text = "금액: " + item.expenseMoney
+        holder.binding.tvExpenseMoney.text = "금액: ${NumberFormat.getNumberInstance(Locale.US).format(item.expenseMoney.toInt())}원"
         holder.binding.tvExpensePlace.text = "장소: " + item.expensePlace
         holder.binding.tvExpensedDate.text = "날짜: " + item.expenseDate
     }

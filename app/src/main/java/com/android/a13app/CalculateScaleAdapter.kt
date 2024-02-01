@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.android.a13app.databinding.CalculateScaleItemBinding
 import com.android.a13app.databinding.GroupItemBinding
+import java.text.NumberFormat
+import java.util.Locale
 import java.util.Vector
 
 class CalculateScaleAdapter(private val context: Context, private val calculateScaleResult: Vector<CalculateScale>) :
@@ -24,7 +26,8 @@ class CalculateScaleAdapter(private val context: Context, private val calculateS
         val data = calculateScaleResult[position]
 
         if(data.amount != 0.0){
-            holder.binding.tvCalculateExpense.text = "${data.name} 님 -> ${data.receiver} 님\n${data.amount.toInt()} 원 송금해주시면 됩니다"
+            val amount: String = NumberFormat.getNumberInstance(Locale.US).format(data.amount.toInt()).toString()
+            holder.binding.tvCalculateExpense.text = "${data.name} 님 -> ${data.receiver} 님\n${amount}원 송금해주시면 됩니다"
         } else{
             holder.binding.cvCalculateExpense.visibility = android.view.View.GONE
             holder.binding.llCalculateExpense.visibility = android.view.View.GONE

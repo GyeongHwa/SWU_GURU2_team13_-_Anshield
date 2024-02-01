@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.a13app.databinding.FragmentDetailsBinding
+import java.text.NumberFormat
+import java.util.Locale
 import java.util.Vector
 
 class DetailsFragment : Fragment(), View.OnClickListener {
@@ -77,7 +79,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             val expense = item.expenseMoney.toInt()
             sumExpense += expense
         }
-        binding!!.tvSumExpense.text = "총 금액 : " + sumExpense.toString()
+        binding!!.tvSumExpense.text = "총 금액 : ${NumberFormat.getNumberInstance(Locale.US).format(sumExpense)}원"
 
         //멤버 리사이클러뷰
         val memberList = Vector<Member>()
