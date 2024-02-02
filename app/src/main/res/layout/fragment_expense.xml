@@ -81,7 +81,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
-            android:hint="날짜 입력 ex.YYYY.MM.DD." />
+            android:hint="날짜 입력 ex.YYYY.MM.DD."
+            android:inputType="number"/>
     </LinearLayout>
 
     <Button

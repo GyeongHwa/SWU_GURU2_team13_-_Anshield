@@ -29,9 +29,9 @@ class CalculateScaleAdapter(private val context: Context, private val calculateS
             val amount: String = NumberFormat.getNumberInstance(Locale.US).format(data.amount.toInt()).toString()
             holder.binding.tvCalculateExpense.text = "${data.name} 님 -> ${data.receiver} 님\n${amount}원 송금해주시면 됩니다"
         } else{
-            holder.binding.cvCalculateExpense.visibility = android.view.View.GONE
-            holder.binding.llCalculateExpense.visibility = android.view.View.GONE
-            holder.binding.tvCalculateExpense.visibility = android.view.View.GONE
+            holder.binding.cvCalculateExpense.visibility = View.GONE
+            holder.binding.llCalculateExpense.visibility = View.GONE
+            holder.binding.tvCalculateExpense.visibility = View.GONE
         }
     }
 
