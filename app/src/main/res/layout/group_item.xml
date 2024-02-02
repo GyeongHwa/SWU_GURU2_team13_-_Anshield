@@ -4,7 +4,7 @@
     app:cardCornerRadius="20dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="#f0f0f0"
+    android:backgroundTint="#FFFFFF"
     android:layout_margin="10dp"
     android:padding="20dp">
     <LinearLayout
@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center_horizontal"
+        android:background = "#FFFFFFFF"
         android:orientation="vertical">
 
         <TextView

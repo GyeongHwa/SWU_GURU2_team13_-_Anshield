@@ -4,7 +4,6 @@
     app:cardCornerRadius="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/md_theme_errorContainer"
     android:padding="10dp"
     android:layout_margin="10dp">
     <LinearLayout

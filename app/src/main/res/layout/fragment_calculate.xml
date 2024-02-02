@@ -29,8 +29,7 @@
             android:text="정 산 결 과"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="bold"
-            android:textColor="@color/cardview_light_background"
-            android:background="#a0a0a0"/>
+            android:textColor="@color/cardview_dark_background" />
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/calculateScaleRecyclerView"
             android:layout_width="match_parent"
