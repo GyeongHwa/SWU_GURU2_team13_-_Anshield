@@ -17,7 +17,7 @@ class DBManager(
 ) : SQLiteOpenHelper(context, name, factory, version) {
     private val TAG = "DBManager"
     companion object {
-        const val DB_NAME = "friendshipDB.db"
+        const val DB_NAME = "friendshipDBkr.db"
         private var DB_PATH = ""
     }
     init {
