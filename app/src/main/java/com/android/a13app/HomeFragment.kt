@@ -31,7 +31,11 @@ class HomeFragment : Fragment() {
         //로그인 정보 가져오기
         login_id = arguments?.getString("ID").toString()
         login_name = arguments?.getString("NAME").toString()
-        //Toast.makeText(this.context, login_id+", "+login_name, Toast.LENGTH_SHORT).show()
+
+        //액션바 타이틀 앱 이름으로 반영
+        val actionBar = (activity as ParentActivity?)!!.supportActionBar
+        actionBar!!.title = "우정!"
+        actionBar.setDisplayHomeAsUpEnabled(true)
 
         binding.tvName.text = login_name + " 님의 모임"
 

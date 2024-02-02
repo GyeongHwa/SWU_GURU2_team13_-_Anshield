@@ -35,6 +35,11 @@ class JoinFragment : Fragment() {
         val login_id = arguments?.getString("ID")
         val login_name = arguments?.getString("NAME")
 
+        //액션바 제목을 앱 이름으로
+        val actionBar = (activity as ParentActivity?)!!.supportActionBar
+        actionBar!!.title = "우정!"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+
         dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
 
         //입력된 모임토큰에 해당하는 모임이름 출력

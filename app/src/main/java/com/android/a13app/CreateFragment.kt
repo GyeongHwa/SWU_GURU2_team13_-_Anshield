@@ -30,6 +30,11 @@ class CreateFragment : Fragment() {
         val login_id = arguments?.getString("ID")
         val login_name = arguments?.getString("NAME")
 
+        //액션바 제목을 앱이름으로
+        val actionBar = (activity as ParentActivity?)!!.supportActionBar
+        actionBar!!.title = "우정!"
+        actionBar.setDisplayHomeAsUpEnabled(true)
+
         dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
 
         binding.btnCreate.setOnClickListener {
