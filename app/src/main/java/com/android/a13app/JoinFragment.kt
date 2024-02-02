@@ -74,6 +74,9 @@ class JoinFragment : Fragment() {
 
                 // 모임의 멤버가 되었습니다! 메시지 출력
                 Toast.makeText(context, "모임의 멤버가 되었습니다!", Toast.LENGTH_SHORT).show()
+
+                val parentActivity = activity as ParentActivity
+                parentActivity.setFragment(HomeFragment(), null, null)
             } else {
                 // 입력한 토큰이 유효하지 않을 경우에 대한 처리
                 Toast.makeText(context, "입력한 토큰이 유효하지 않습니다.", Toast.LENGTH_SHORT).show()
