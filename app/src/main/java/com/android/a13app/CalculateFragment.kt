@@ -66,7 +66,7 @@ class CalculateFragment : Fragment() {
 
             while (cursor2.moveToNext()) {
                 val expenseAmount = cursor2.getDouble(0)
-                members.add(Calculate(memberId, memberName, expenseAmount))
+                members.add(Calculate(memberId, memberName, expenseAmount, 0.0))
             }
 
             cursor2.close()
@@ -92,16 +92,15 @@ class CalculateFragment : Fragment() {
 
         // 차액 계산
         for (item in members) {
-
-            memberScale.add(CalculateScale(item.id, item.name, item.expense, item.expense - average, "", 0.0))
+            item.difference = item.expense - average
         }
 
         // 정산 결과를 출력
-        for ( i in 0..(memberScale.size - 1)) {
-            for ( j  in 0..(memberScale.size - 1)) {
+        for ( i in 0..(members.size - 1)) {
+            for ( j  in 0..(members.size - 1)) {
 
-                var payer = memberScale[i]
-                var receiver = memberScale[j]
+                var payer = members[i]
+                var receiver = members[j]
 
                 if (payer.difference < 0 && receiver.difference > 0) {
                     var amount = Math.min(Math.abs(payer.difference), Math.abs(receiver.difference))
@@ -109,8 +108,7 @@ class CalculateFragment : Fragment() {
                     payer.difference = payer.difference + amount
                     receiver.difference = receiver.difference - amount
 
-                    memberScale[i].receiver = receiver.name
-                    memberScale[i].amount = amount
+                    memberScale.add(CalculateScale(payer.name, receiver.name, amount))
                 }
             }
         }

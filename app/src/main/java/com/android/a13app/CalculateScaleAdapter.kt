@@ -25,9 +25,9 @@ class CalculateScaleAdapter(private val context: Context, private val calculateS
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val data = calculateScaleResult[position]
 
-        if(data.amount != 0.0){
+        if(data.amount.toInt() != 0){
             val amount: String = NumberFormat.getNumberInstance(Locale.US).format(data.amount.toInt()).toString()
-            holder.binding.tvCalculateExpense.text = "${data.name} 님 -> ${data.receiver} 님\n${amount}원 송금해주시면 됩니다"
+            holder.binding.tvCalculateExpense.text = "${data.payer} 님 -> ${data.receiver} 님\n${amount}원 송금해주시면 됩니다"
         } else{
             holder.binding.cvCalculateExpense.visibility = View.GONE
             holder.binding.llCalculateExpense.visibility = View.GONE
