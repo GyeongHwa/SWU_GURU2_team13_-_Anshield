@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.android.a13app.databinding.FragmentCreateBinding
 import com.android.a13app.databinding.FragmentCreateResultBinding
 
 class CreateResultFragment : Fragment() {
@@ -20,6 +19,7 @@ class CreateResultFragment : Fragment() {
         val groupName = arguments?.getString("G_NAME").toString()
         val token = arguments?.getString("TOKEN").toString()
 
+        //TextView에 모임이름 및 모임토큰 출력
         binding.tvGroupName.text = groupName + "\n생성 완료!"
         binding.tvToken.text = "멤버를 초대해보세요!\n참가 토큰 : " + token
 

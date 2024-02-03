@@ -1,6 +1,5 @@
 package com.android.a13app
 
-import android.app.ActionBar
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -10,18 +9,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.a13app.databinding.FragmentCalculateBinding
 import java.util.Vector
 
 class CalculateFragment : Fragment() {
-
-    lateinit var binding: FragmentCalculateBinding
+    //DB연동
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
 
+    lateinit var binding: FragmentCalculateBinding
+
     lateinit var bundle: Bundle
-    lateinit var detailsFragment: DetailsFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,19 +34,18 @@ class CalculateFragment : Fragment() {
         val token = arguments?.getString("TOKEN")
         val groupName: String = arguments?.getString("G_NAME").toString()
 
-        // title 변경
+        // 액션바 제목을 모임이름으로
         val actionBar = (activity as ParentActivity?)!!.supportActionBar
         actionBar.run {
             this!!.title = groupName
             setDisplayHomeAsUpEnabled(true)
         }
 
-        dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
-
         // 모임 멤버별 지출 금액 가져오기
         val members = Vector<Calculate>()
         val memberScale = Vector<CalculateScale>()
 
+        dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
         sqlitedb = dbManager.readableDatabase
 
         val cursor: Cursor = sqlitedb.rawQuery(
@@ -73,7 +70,6 @@ class CalculateFragment : Fragment() {
         }
 
         cursor.close()
-
         sqlitedb.close()
 
         // RecyclerView 초기화

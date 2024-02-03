@@ -16,6 +16,7 @@ class CalculateAdapter(private val context: Context, private val calculateResult
     RecyclerView.Adapter<CalculateAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        //리사이클러뷰 아이템 바인딩
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = CalculateItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)

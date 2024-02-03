@@ -1,7 +1,6 @@
 package com.android.a13app
 
 import android.content.Context
-import android.database.sqlite.SQLiteDatabase
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -20,6 +19,7 @@ class MemberAdapter(private val context: Context, private val items: Vector<Memb
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //리사이클러뷰 아이템에 멤버 이름 출력
         val item = items[position]
         holder.binding.btnName.text = item.name
     }

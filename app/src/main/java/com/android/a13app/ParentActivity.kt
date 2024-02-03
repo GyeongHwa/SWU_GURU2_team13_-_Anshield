@@ -3,11 +3,8 @@ package com.android.a13app
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.fragment.app.Fragment
-import com.android.a13app.databinding.ActivityMainBinding
 import com.android.a13app.databinding.ActivityParentBinding
 
 class ParentActivity : AppCompatActivity() {
@@ -26,6 +23,7 @@ class ParentActivity : AppCompatActivity() {
 
         title = "우정!"
 
+        //첫 화면을 홈프래그먼트로 설정
         setFragment(HomeFragment(), null, null)
 
         //네비게이션 드로어 선택하면 해당 Fragment로 전환
@@ -39,6 +37,7 @@ class ParentActivity : AppCompatActivity() {
             false
         }
     }
+
     //입력받은 Fragment로 화면 전환 및 데이터 전달 함수
     fun setFragment(fragment: Fragment, groupName: String?, token: String?){
         //ID와 NAME 정보가져오기

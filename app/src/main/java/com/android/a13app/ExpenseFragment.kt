@@ -13,16 +13,17 @@ import android.widget.Toast
 import com.android.a13app.databinding.FragmentExpenseBinding
 
 class ExpenseFragment : Fragment() {
-    lateinit var binding: FragmentExpenseBinding
-
+    //DB 연동
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
 
-    lateinit var bundle: Bundle
-    lateinit var mapFragment: MapFragment
-    lateinit var detailsFragment: DetailsFragment
-    lateinit var items: Array<String>
-    lateinit var payer: String
+    lateinit var binding: FragmentExpenseBinding
+
+    lateinit var mapFragment: MapFragment //이동할 프래그먼트
+    lateinit var detailsFragment: DetailsFragment //이동할 프래그먼트
+    lateinit var bundle: Bundle //프래그먼트 이동시 데이터 전달
+    lateinit var items: Array<String> //멤버 드롭다운 메뉴에 들어갈 멤버 아이디를 담는 Array
+    lateinit var payer: String //결제한 사람 아이디
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,22 +54,26 @@ class ExpenseFragment : Fragment() {
         //결제한 사람 드롭다운 메뉴
         sqlitedb = dbManager.readableDatabase
 
+        //해당 모임에 참가한 멤버 아이디 조회
         var payerCursor: Cursor
         payerCursor = sqlitedb.rawQuery("SELECT id FROM tb_member WHERE token= ?", arrayOf(token))
         items = Array(payerCursor.count) {index ->
             payerCursor.moveToNext()
             payerCursor.getString(payerCursor.getColumnIndexOrThrow("id")).toString()
         }
+
+        //드롭다운 메뉴에 아이템 추가
         val memberAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, items)
         memberAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
         binding.spinnerPayer.adapter = memberAdapter
 
+        //MapFragment에서 돌아왔을 때 이전 값 유지
         if (arguments?.getString("PAYER") != null) {
             val indexOfSelectedItem = items.indexOf(arguments?.getString("PAYER"))
             binding.spinnerPayer.setSelection(indexOfSelectedItem)
         }
 
+        //드롭다운 메뉴에서 선택된 결제한 사람을 payer에 저장
         binding.spinnerPayer.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parentView: AdapterView<*>,
@@ -84,16 +89,19 @@ class ExpenseFragment : Fragment() {
 
         //지출항목 저장
         binding.btnExAdd.setOnClickListener {
-            var str_payer = payer?:null
+            var str_payer = payer
             var str_expense = binding.edtExpense.text.toString()
             var str_location = binding.edtLocation.text.toString()
             var str_date = binding.edtDate.text.toString()
 
             if (str_payer == "") {
+                //결제한 사람 입력 필수
                 Toast.makeText(requireContext(), "결제한 사람을 입력하세요", Toast.LENGTH_SHORT).show()
             } else if (str_expense == "") {
+                //결제 금액 입력 필수
                 Toast.makeText(requireContext(), "결제한 금액을 입력하세요", Toast.LENGTH_SHORT).show()
             } else {
+                //지출항목 테이블에 삽입
                 sqlitedb = dbManager.writableDatabase
 
                 sqlitedb.execSQL("INSERT INTO tb_expense(token, payer, expense, location, date) VALUES (?, ?, ?, ?, ?)"
@@ -102,9 +110,9 @@ class ExpenseFragment : Fragment() {
 
                 Toast.makeText(requireContext(), "지출항목이 추가되었습니다", Toast.LENGTH_SHORT).show()
 
-                detailsFragment = DetailsFragment()
-                detailsFragment.arguments = bundle
-                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.rootLayout, detailsFragment).commit()
+                //모임상세 프래그먼트로 이동
+                val parentActivity = activity as ParentActivity
+                parentActivity.setFragment(DetailsFragment(), groupName, token)
             }
         }
 
@@ -116,6 +124,7 @@ class ExpenseFragment : Fragment() {
             bundle.putString("LOCATION", binding.edtLocation.text.toString())
             bundle.putString("DATE", binding.edtDate.text.toString())
 
+            //지도 프래그먼트로 전환
             mapFragment = MapFragment()
             mapFragment.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction().replace(R.id.rootLayout, mapFragment).commit()

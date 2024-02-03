@@ -1,6 +1,5 @@
 package com.android.a13app
 
-import android.content.Intent
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -10,15 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.android.a13app.databinding.FragmentCreateBinding
-import kotlin.random.Random
 
 class CreateFragment : Fragment() {
-    lateinit var binding: FragmentCreateBinding
-
+    //DB연동
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
 
-    lateinit var createResultFragment: CreateResultFragment
+    lateinit var binding: FragmentCreateBinding
+    lateinit var createResultFragment: CreateResultFragment //이동할 Fragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,23 +35,26 @@ class CreateFragment : Fragment() {
 
         dbManager = DBManager(requireContext(), DBManager.DB_NAME, null, 1)
 
+        //모임생성 버튼 클릭 이벤트
         binding.btnCreate.setOnClickListener {
             var str_groupName: String = binding.edtGroupName.text.toString()
             var token: String
 
             if (str_groupName == "") {
+                //모임 이름 미입력 시 에러 메시지 출력
                 Toast.makeText(requireContext(), "모임 이름을 입력하세요", Toast.LENGTH_SHORT).show()
             } else {
+                //모임 이름 입력 시 DB에 저장
                 sqlitedb = dbManager.writableDatabase
 
-                //토큰 생성
+                //고유토큰 생성
                 var cursor: Cursor
                 do { //중복 확인
                     token = generateRandomString()
                     cursor = sqlitedb.rawQuery("SELECT * FROM tb_group WHERE token=?", arrayOf(token))
                 } while(cursor.count != 0)
 
-                //모임 생성
+                //모임 생성(group 테이블에 그룹 삽입, 해당 group의 member로 현재 로그인한 사용자 추가)
                 sqlitedb.execSQL("INSERT INTO tb_group VALUES (?, ?)", arrayOf(token, str_groupName))
                 sqlitedb.execSQL("INSERT INTO tb_member(id, token) VALUES(?, ?)", arrayOf(login_id, token))
                 sqlitedb.close()
@@ -77,6 +78,7 @@ class CreateFragment : Fragment() {
         return binding.root
     }
 
+    //모임토큰 생성(랜덤 숫자 12개로 이루어진 문자열 생성)
     fun generateRandomString(): String {
         val length = 12
         val allowedChars = ('0'..'9')

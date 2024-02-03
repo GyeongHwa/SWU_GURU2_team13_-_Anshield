@@ -1,7 +1,6 @@
 package com.android.a13app
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,7 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     lateinit var binding: FragmentMapBinding
 
-    lateinit var expenseFragment: ExpenseFragment
+    lateinit var expenseFragment: ExpenseFragment //이동할 프래그먼트
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +37,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         bundle.putString("G_NAME", arguments?.getString("G_NAME").toString())
         bundle.putString("TOKEN", arguments?.getString("TOKEN").toString())
 
+        //지도 불러오기
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
+        //돌아가기 버튼에 대한 클릭 이벤트(이전 프래그먼트로 이동)
         binding.btnReturn.setOnClickListener {
             expenseFragment = ExpenseFragment()
             expenseFragment.arguments = bundle
@@ -51,11 +52,11 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(p0: GoogleMap) {
-        Log.i("MAP", "onMapReady()...")
         mMap = p0
 
         val seoul = LatLng(37.556, 126.97)
 
+        //초점 맞출 지점 설정
         val markerOptions = MarkerOptions()
         markerOptions.position(seoul)
         markerOptions.title("서울")

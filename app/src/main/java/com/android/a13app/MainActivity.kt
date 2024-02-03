@@ -16,10 +16,13 @@ class MainActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.btnLogin)
         btnRegister = findViewById(R.id.btnRegister)
 
+        //로그인 버튼 클릭 시 로그인 액티비티로 이동
         btnLogin.setOnClickListener {
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        //회원가입 버튼 클릭 시 회원가입 액티비티로 이동
         btnRegister.setOnClickListener {
             var intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)

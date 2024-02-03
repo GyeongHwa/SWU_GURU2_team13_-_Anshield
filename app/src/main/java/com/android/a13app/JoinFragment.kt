@@ -1,29 +1,23 @@
 package com.android.a13app
 
-import android.content.Intent
-import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
-import com.android.a13app.databinding.FragmentHomeBinding
 import com.android.a13app.databinding.FragmentJoinBinding
 
 class JoinFragment : Fragment() {
-    lateinit var binding: FragmentJoinBinding
-
+    //DB 연동
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
+
+    lateinit var binding: FragmentJoinBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +43,14 @@ class JoinFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val textLength = s?.length ?:0
                 if (textLength == 12) {
-                    //모임이름 검색
-                    val dbManager = DBManager(context, DBManager.DB_NAME, null, 1)
+                    //모임이름 조회
                     sqlitedb = dbManager.readableDatabase
 
                     val query = "SELECT * FROM tb_group WHERE token = ?"
                     val cursorGroupName:Cursor
                     cursorGroupName = sqlitedb.rawQuery(query, arrayOf(s.toString()))
 
+                    //해당 토큰을 가지는 모임이름 출력
                     if (cursorGroupName.count > 0) {
                         cursorGroupName.moveToFirst()
                         val gName = cursorGroupName.getString(cursorGroupName.getColumnIndexOrThrow("name")).toString()
@@ -67,24 +61,21 @@ class JoinFragment : Fragment() {
 
                     cursorGroupName.close()
                     sqlitedb.close()
-                    dbManager.close()
                 } else {
                     //유효하지 않은 토큰값
                     binding.tvGName.text = "유효하지 않은 토큰입니다"
                 }
             }
 
-            override fun afterTextChanged(s: Editable?) {
-                // 입력된 텍스트가 변경된 후에 호출됩니다.
-            }
+            override fun afterTextChanged(s: Editable?) {}
         })
 
+        //모임참가 버튼에 대한 클릭 이벤트 처리
         binding.joinButton.setOnClickListener {
             val enteredToken = binding.joinEditText.text.toString()
 
             // 입력받은 토큰이 tb_group 테이블에 존재하는지 확인하는 함수
             fun isTokenValid(enteredToken: String): Boolean {
-                val dbManager = DBManager(context, DBManager.DB_NAME, null, 1)
                 sqlitedb = dbManager.readableDatabase
 
                 val query = "SELECT * FROM tb_group WHERE token = ?"
@@ -95,14 +86,12 @@ class JoinFragment : Fragment() {
 
                 cursor.close()
                 sqlitedb.close()
-                dbManager.close()
 
                 return isValid
             }
 
             //이미 모임의 멤버인지 확인
             fun isAlreadyJoined(enteredToken: String): Boolean {
-                val dbManager = DBManager(context, DBManager.DB_NAME, null, 1)
                 sqlitedb = dbManager.readableDatabase
 
                 val query = "SELECT * FROM tb_member WHERE token = ? AND id = ?"
@@ -113,20 +102,17 @@ class JoinFragment : Fragment() {
 
                 cursor.close()
                 sqlitedb.close()
-                dbManager.close()
 
                 return isJoined
             }
 
             // tb_member 테이블에 사용자 ID와 토큰 추가하는 함수
             fun addMemberToTeam(login_id: String, enteredToken: String) {
-                val dbManager = DBManager(context, DBManager.DB_NAME, null, 1)
                 val sqlitedb = dbManager.writableDatabase
 
                 sqlitedb.execSQL("INSERT INTO tb_member(id, token) VALUES(?, ?)", arrayOf(login_id, enteredToken))
 
                 sqlitedb.close()
-                dbManager.close()
             }
 
             // tb_group 테이블에서 입력받은 토큰과 일치하는 모임이 있는지 확인
@@ -147,6 +133,9 @@ class JoinFragment : Fragment() {
                 Toast.makeText(context, "입력한 토큰이 유효하지 않습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+
+        dbManager.close()
+
         return binding.root
     }
 }

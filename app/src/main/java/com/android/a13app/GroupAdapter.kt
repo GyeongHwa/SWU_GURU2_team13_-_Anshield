@@ -1,13 +1,9 @@
 package com.android.a13app
 
 import android.content.Context
-import android.content.Intent
-import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.android.a13app.databinding.GroupItemBinding
@@ -26,14 +22,13 @@ class GroupAdapter(private val context: Context, private val items: Vector<Group
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //모임목록의 아이템 구성
         val item = items[position]
         holder.binding.tvGroupName.text = "모임명: " + item.groupName
         holder.binding.tvMembers.text = "멤버: " + item.members
 
         holder.binding.root.setOnClickListener {
             detailsFragment = DetailsFragment()
-
-            Log.i("TEST!", item.token)
 
             var bundle = Bundle()
             bundle.putString("TOKEN", item.token)

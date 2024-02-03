@@ -1,6 +1,5 @@
 package com.android.a13app
 
-import android.app.ActionBar
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.os.Bundle
@@ -8,8 +7,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.a13app.databinding.FragmentDetailsBinding
@@ -18,8 +15,10 @@ import java.util.Locale
 import java.util.Vector
 
 class DetailsFragment : Fragment(), View.OnClickListener {
+    //DB 연동
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
+
     lateinit var binding: FragmentDetailsBinding
     lateinit var adapter: ExpenseCardAdapter
     lateinit var memberAdapter: MemberAdapter
@@ -34,7 +33,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         val groupName: String = arguments?.getString("G_NAME").toString()
         val token: String = arguments?.getString("TOKEN").toString()
 
-        //title변경
+        //액션바 제목을 모임이름으로
         val actionBar = (activity as ParentActivity?)!!.supportActionBar
         actionBar!!.title = groupName
         actionBar.setDisplayHomeAsUpEnabled(true)
@@ -49,7 +48,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         //지출항목목록 리사이클러뷰
         val list = Vector<ExpenseCard>()
 
-        //지출항목 조회하는 SELECT문
+        //지출항목 조회
         var expenseQuery: String = ""
         expenseQuery += "SELECT tb_account.name, tb_expense.expense, tb_expense.location, tb_expense.date FROM tb_expense "
         expenseQuery += "JOIN tb_account ON tb_account.id = tb_expense.payer "
@@ -66,14 +65,16 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             val item = ExpenseCard(str_payer, str_expense, str_location, str_date)
             list.add(item)
         }
+        cursor.close()
 
+        //지출항목 RecyclerView 구성
         val layoutManager = LinearLayoutManager(context)
         binding!!.expenseRecyclerView.layoutManager = layoutManager
 
         adapter = ExpenseCardAdapter(requireContext(), list)
         binding!!.expenseRecyclerView.adapter = adapter
 
-        //총 금액 출력
+        //총 지출금액 출력
         var sumExpense: Int = 0
         for (item in list) {
             val expense = item.expenseMoney.toInt()
@@ -84,6 +85,7 @@ class DetailsFragment : Fragment(), View.OnClickListener {
         //멤버 리사이클러뷰
         val memberList = Vector<Member>()
 
+        //멤버 조회
         var memberQuery = ""
         memberQuery += "SELECT tb_account.name FROM tb_account "
         memberQuery += "JOIN tb_member ON tb_account.id = tb_member.id "
@@ -98,7 +100,10 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             )
             memberList.add(memberItem)
         }
+        memberCursor.close()
+        sqlitedb.close()
 
+        //멤버 RecyclerView 구성
         val memberLayoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         binding!!.membersRecyclerView.layoutManager = memberLayoutManager
 
@@ -117,10 +122,9 @@ class DetailsFragment : Fragment(), View.OnClickListener {
             parentActivity.setFragment(CalculateFragment(), groupName, token)
         }
 
+        dbManager.close()
         return binding!!.root
     }
 
-    override fun onClick(p0: View?) {
-        TODO("Not yet implemented")
-    }
+    override fun onClick(p0: View?) {}
 }

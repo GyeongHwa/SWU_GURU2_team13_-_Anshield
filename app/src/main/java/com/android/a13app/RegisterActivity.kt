@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 
 class RegisterActivity : AppCompatActivity() {
+    //DB 연동
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
 
@@ -17,6 +18,7 @@ class RegisterActivity : AppCompatActivity() {
     lateinit var edtPassword: EditText //비밀번호 입력값
     lateinit var edtName: EditText //사용자 이름 입력값
     lateinit var btnRegisterForm: Button //회원가입 요청 버튼
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -28,7 +30,9 @@ class RegisterActivity : AppCompatActivity() {
 
         dbManager = DBManager(this, DBManager.DB_NAME, null, 1)
 
+        //가입하기 버튼에 대한 클릭 이벤트 처리
         btnRegisterForm.setOnClickListener {
+            //사용자 입력값 가져오기
             var str_id: String = edtId.text.toString()
             var str_pw: String = edtPassword.text.toString()
             var str_name: String = edtName.text.toString()

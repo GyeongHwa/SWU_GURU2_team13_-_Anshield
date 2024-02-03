@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 
 class LoginActivity : AppCompatActivity() {
+    //DB 연동
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
 
@@ -24,7 +25,6 @@ class LoginActivity : AppCompatActivity() {
         edtPassword = findViewById(R.id.edtPassword)
         btnLoginForm = findViewById(R.id.btnLoginForm)
 
-        //DB 생성(friendshipDB)
         dbManager = DBManager(this, DBManager.DB_NAME,null, 1)
 
         btnLoginForm.setOnClickListener {

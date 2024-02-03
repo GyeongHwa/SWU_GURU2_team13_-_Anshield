@@ -17,9 +17,16 @@ class DBManager(
 ) : SQLiteOpenHelper(context, name, factory, version) {
     private val TAG = "DBManager"
     companion object {
+        //불러올 db 파일 이름(asset 폴더에 넣어놓음)
+        /*
+        * friendshipDBen.db는 데이터셋이 영어
+        * friendshipDBkr.db는 데이터셋이 한국어
+        */
         const val DB_NAME = "friendshipDBkr.db"
         private var DB_PATH = ""
     }
+
+    //객체 생성 시 DB_PATH 지정 및 db 생성 확인
     init {
         DB_PATH = "/data/data/" + context!!.packageName + "/databases/"
         dataBaseCheck(context)
@@ -33,6 +40,7 @@ class DBManager(
         }
     }
 
+    //asset에 저장된 db파일 가져오기
     private fun dbCopy(context: Context) { //db browser for sql에서 만든 db파일 import
         try {
             val folder = File(DB_PATH)
@@ -55,6 +63,7 @@ class DBManager(
         }
     }
 
+    //asset에 db파일 없는 경우 테이블 생성
     override fun onCreate(p0: SQLiteDatabase?) {
         p0!!.execSQL("CREATE TABLE IF NOT EXISTS tb_account ( id TEXT, pw TEXT, name TEXT, PRIMARY KEY(id) )")
         p0!!.execSQL("CREATE TABLE  IF NOT EXISTS tb_expense ( num INTEGER PRIMARY KEY AUTOINCREMENT, token TEXT, payer TEXT, expense INTEGER, location TEXT, date TEXT)")

@@ -11,6 +11,7 @@ import java.util.Vector
 
 class ExpenseCardAdapter(private val context: Context, private val items: Vector<ExpenseCard>) : RecyclerView.Adapter<ExpenseCardAdapter.ViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        //리사이클러뷰 아이템 바인딩
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ExpensecardItemBinding.inflate(layoutInflater, parent, false)
         return ViewHolder(binding)
@@ -20,6 +21,7 @@ class ExpenseCardAdapter(private val context: Context, private val items: Vector
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        //지출항목 출력
         val item = items[position]
         holder.binding.tvExpensePerson.text = "결제한 사람: " + item.expensePerson
         holder.binding.tvExpenseMoney.text = "금액: ${NumberFormat.getNumberInstance(Locale.US).format(item.expenseMoney.toInt())}원"

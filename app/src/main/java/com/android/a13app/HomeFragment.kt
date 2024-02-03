@@ -14,13 +14,12 @@ import com.android.a13app.databinding.FragmentHomeBinding
 import java.util.Vector
 
 class HomeFragment : Fragment() {
-    lateinit var binding: FragmentHomeBinding
-    lateinit var adapter: GroupAdapter
+    //DB 연동
     lateinit var dbManager: DBManager
     lateinit var sqlitedb: SQLiteDatabase
 
-    lateinit var login_id: String
-    lateinit var login_name: String
+    lateinit var binding: FragmentHomeBinding
+    lateinit var adapter: GroupAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,10 +28,10 @@ class HomeFragment : Fragment() {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         //로그인 정보 가져오기
-        login_id = arguments?.getString("ID").toString()
-        login_name = arguments?.getString("NAME").toString()
+        val login_id = arguments?.getString("ID").toString()
+        val login_name = arguments?.getString("NAME").toString()
 
-        //액션바 타이틀 앱 이름으로 반영
+        //액션바 타이틀 앱 이름으로 설정
         val actionBar = (activity as ParentActivity?)!!.supportActionBar
         actionBar!!.title = "우정!"
         actionBar.setDisplayHomeAsUpEnabled(true)
@@ -44,12 +43,12 @@ class HomeFragment : Fragment() {
 
         sqlitedb = dbManager.readableDatabase
 
-        //로그인한 계정이 참가한 모든 그룹 조회
         val list = Vector<Group>()
         var groupName: String = ""
         var members: String = ""
         var token: String = ""
 
+        //사용자가 참여 중인 모든 그룹 조회
         var groupQuery: String = ""
         groupQuery += "SELECT tb_member.token, tb_group.name "
         groupQuery += "FROM tb_member "
@@ -63,6 +62,7 @@ class HomeFragment : Fragment() {
             groupName = groupCursor.getString(groupCursor.getColumnIndexOrThrow("tb_group.name")).toString()
             token = groupCursor.getString(groupCursor.getColumnIndexOrThrow("tb_member.token")).toString()
 
+            //멤버 문자열 저장("멤버1, 멤버2, 멤버3, ..." 형식)
             var memberQuery: String = ""
             memberQuery += "SELECT tb_account.name FROM tb_account "
             memberQuery += "JOIN tb_member ON tb_account.id = tb_member.id "
@@ -72,7 +72,9 @@ class HomeFragment : Fragment() {
             while (memberCursor.moveToNext()) {
                 members += memberCursor.getString(memberCursor.getColumnIndexOrThrow("tb_account.name")).toString() + ", "
             }
-            // while 루프가 끝난 후 ',' 제거
+            memberCursor.close()
+
+            // while 루프가 끝난 후 맨 뒤에 있는 ',' 제거
             members = members.substring(0, members.length-2)
 
             //리사이클러뷰 아이템 추가
@@ -80,7 +82,10 @@ class HomeFragment : Fragment() {
             list.add(item)
             members = ""
         }
+        groupCursor.close()
+        sqlitedb.close()
 
+        //리사이클러뷰 구성
         val layoutManager = LinearLayoutManager(context)
         binding!!.recyclerView.layoutManager = layoutManager
 
@@ -94,6 +99,7 @@ class HomeFragment : Fragment() {
             intent.putExtra("NAME", login_name)
             startActivity(intent)
         }
+        dbManager.close()
 
         return binding!!.root
     }
